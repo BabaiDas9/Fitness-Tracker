@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { AddWorkoutForm } from "../../Componant/Form/AddWorkoutForm";
+import { AddWorkoutForm, WorkoutFormData } from "../../Componant/Form/AddWorkoutForm";
 import { ExerciseCard } from "../../Componant/Card/ExerciseCard";
 
 
@@ -31,10 +31,31 @@ export function WorkOutPlan() {
         setExerciseFieldExpended(newExerciseFieldExpended);
     }
     
-    const handleAddWorkoutForm = () => {
+    const handleShowAddWorkoutForm = (data: WorkoutFormData) => {
+        
+        const newWorkout: workoutData = {
+            workoutName: data.workoutName,
+            workoutReps: data.reps,
+            workoutSet: data.sets,
+            workoutWeight: data.weight
+        };
 
-    }
+        setWorkoutData([...workoutData, newWorkout]);
 
+        setShowAddWorkOut(false);
+        
+    };
+
+    const handleUpdateWorkout = (index: number, data: WorkoutFormData) => {
+        const newWorkoutData = [...workoutData];
+        newWorkoutData[index] = {
+            workoutName: data.workoutName,
+            workoutReps: data.reps,
+            workoutSet: data.sets,
+            workoutWeight: data.weight
+        };
+        setWorkoutData(newWorkoutData);
+    };
       useEffect(() => {
         setWorkoutData([
             { 
@@ -82,6 +103,7 @@ export function WorkOutPlan() {
                     <AddWorkoutForm
                         heading="Add Workout"
                         saveButtonName="Save"
+                        onSubmitFrom={handleShowAddWorkoutForm}
                     />
                 </section>
             )}
@@ -99,6 +121,7 @@ export function WorkOutPlan() {
                             workout={workout}
                             onExpand={() => handleExerciseFieldExpended(index)}
                             isExpanded={exerciseFieldExpended[index] || false}
+                            onSubmitFrom= { (data) => handleUpdateWorkout(index,data) }
                         />
                     ))}
                 </div>

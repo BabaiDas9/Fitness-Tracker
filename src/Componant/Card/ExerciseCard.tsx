@@ -1,14 +1,15 @@
 import { UpArrow } from "../../assets/Icon/allAppIcon";
 import { workoutData } from "../../Pages/Workout/WorkOutPlan";
-import { AddWorkoutForm } from "../Form/AddWorkoutForm";
+import { AddWorkoutForm, WorkoutFormData } from "../Form/AddWorkoutForm";
 
 interface ExerciseCardProps {
   workout: workoutData;
   onExpand: () => void;
   isExpanded: boolean;
+  onSubmitFrom: (  data: WorkoutFormData) => void
 }
 
-export function ExerciseCard({ workout, onExpand, isExpanded  }: ExerciseCardProps) {
+export function ExerciseCard({ workout, onExpand, isExpanded,onSubmitFrom  }: ExerciseCardProps) {
     return (
       <div className="border rounded-xl shadow-sm overflow-hidden mb-2">
       <div className="flex justify-between items-center p-3 bg-gray-100 cursor-pointer" onClick={onExpand}>
@@ -30,6 +31,7 @@ export function ExerciseCard({ workout, onExpand, isExpanded  }: ExerciseCardPro
               heading="Update Workout"
               saveButtonName="Update"
               saveButtonColor="bg-green"
+              onSubmitFrom={onSubmitFrom}
             />
         </div>
       )}
